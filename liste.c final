@@ -149,26 +149,40 @@ int delete_elem(int e, list *l){
 
 
 void sort(int m, list *l){
+	//Erzeugt leere sortierte Liste.
 	list sort = NULL;
+	//Erzeugt aktuelles und nächstes Element.
 	list akt = *l;
-	if ( m > 0){
+	list nxt = *l;
+	if ( m >= 0){
 	while (akt != NULL){
+		//Erzeugt nächstes Element und erstes sortiertes.
 		list nxt = akt->next;
 		list sortakt;
+		//Falls das erste Element der sortierten Liste NULL ist oder größer gleich dem Wert des aktuellen Elements
 		if (sort == NULL || sort->value >= akt->value){
+			//Das nächste Element erhält die Eigenschaften des aktuellen ersten Elements der sortierten Liste.
 			akt->next = sort;
+			//Das erste Element der sortierten Liste wird zum aktuellen Element.
 			sort = akt;
 		}
 		else {
+			//Das aktuelle Element der sortierten Liste wird zum ersten Element der sortierten Liste.
 			sortakt = sort;
+			//Wenn es einen Nachfolger hat und dessen Wert kleiner ist als der Wert des aktuellen Elements:
 			while (sortakt->next != NULL && sortakt->next->value < akt->value){
+				//Dann wird das aktuelle Element der sortierten Liste zu seinem Nachfolger.
 				sortakt = sortakt->next;
 			}
+			//Der Pointer des aktuellen Elements wirdzu einem Pointer auf dden Nachfolger des aktuellen ELements der sortierten Liste.
 			akt->next = sortakt->next;
+			//Der Nachfolger des aktuellen Elements der sortierten Liste wird zum aktuellen Element.
 			sortakt->next = akt;
 		}
+		//Das aktuelle Element wird zum nächsten Element.
 		akt = nxt;
 	}
+	//Der Pointer auf das erste element der Liste wird auf die sortierte Liste umgelegt.
 	*l = sort;
 	}
 	if ( m < 0){
