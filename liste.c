@@ -98,53 +98,44 @@ int delete_elem(int e, list *l){
 
 /*insertionSort Verfahren Prototyp 1.
 
-void sort(int m, list * l)
-{
-	listelement* insertion_sort(listelement* head)
-	{
-	    listelement *x, *y, *e;
-	    x = head;
+void sort(int m, list * l){
+	listelement* insertion_sort(listelement* head){
+	    listelement *a, *b, *c;
+	    a = head;
 	    head = NULL;
-	    while(x != NULL)
-	    {
-		e = x;
-		x = x->next;
-		if (head != NULL)
-		{
-		    if(e->value > head->value)
-		    {
-			y = head;
-			while ((y->next != NULL) && (e->value> y->next->value))
-			{
-			    y = y->next;
+	    while(a != NULL){
+		c = a;
+		a = a->next;
+		if (head != NULL){
+		    if(c->value > head->value){
+			b = head;
+			while ((b->next != NULL) && (c->value> b->next->value)){
+			    b = b->next;
 			}
-			e->next = y->next;
-			y->next = e;
+			c->next = b->next;
+			b->next = c;
 		    }
-		    else
-		    {
-			e->next = head;
-			head = e ;
+		    else{
+			c->next = head;
+			head = c ;
 		    }
 		}
-		else
-		{
-		    e->next = NULL;
-		    head = e ;
+		else{
+		    c->next = NULL;
+		    head = c ;
 		}
 	    }
 	    return head;
 	}
-	if (m > 0)
+	if (m > 0){
 		print_list(l)
-	if (m < 0)					//Damit bei negativem Wert für m die Liste in absteigender Reihenfolge wiederge-
-		listelement* reverse(node* head)	//geben wird mit dieser Funktion die Liste umdrehen und dann printen.
-		{					//Weiß nicht ob man die Funktion nochmal separat deklarieren muss
-		    listelement* prev    = NULL;
+	}
+	if (m < 0){					//Damit bei negativem Wert für m die Liste in absteigender Reihenfolge wiederge-
+		listelement* reverse(node* head){	//geben wird mit dieser Funktion die Liste umdrehen und dann printen.
+		    listelement* prev    = NULL;	//Weiß nicht ob man die Funktion nochmal separat deklarieren muss
 		    listelement* current = head;
 		    listelement* next;
-		    while (current != NULL)
-		    {
+		    while (current != NULL){
 			next  = current->next;
 			current->next = prev;
 			prev = current;
@@ -154,15 +145,5 @@ void sort(int m, list * l)
 		    return head;
 		}
 		print_list(l);
+	}
 }*/
-
-
-
-
-
-
-
-
-
-
-		
