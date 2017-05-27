@@ -1,0 +1,194 @@
+# Praxis der Programmierung
+# Hausaufgabe 1 - einfach verkettete Listen
+# Abgabedatum: 28.05.2017
+#
+# Gruppennummer: 55
+# Gruppenmitglieder:
+# - Eike Olaf Pubantz
+# - Max Wiedenhöft
+# - Jan Heuer
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct le{
+	int value;
+	struct le * next;
+};
+typedef struct le listelement;
+
+typedef listelement * list;
+
+void insert(int v, list *l);
+int delete_head(list *l);
+void delete_all(list l);
+int length(list l);
+void print_list(list l);
+int insert_pos(int v, int pos, list *l);
+int delete_elem(int e, list *l);
+void sort(int m, list *l);
+
+
+	
+int main(){
+	list l = NULL;
+	insert(10, &l);
+	insert(5, &l);
+	insert(7, &l);
+	print_list(l);
+	printf("%d\n", length(l));
+	insert_pos(4,10,&l);
+	//delete_elem(5, &l);
+	sort(-1, &l);
+	print_list(l);
+	return 0;
+}
+//Wert am Anfang einfügen
+void insert(int v, list *l){
+	listelement * new;
+	new = malloc(sizeof(listelement));
+	new->value = v;
+	new->next = *l;
+	*l = new;
+}
+//Ersten Wert löschen
+int delete_head(list *l){
+	if (*l == NULL) return -1;
+	list old = *l;
+	*l = old->next;
+	free(old);
+	return 0;
+}
+//Ganze Liste löschen
+void delete_all(list l){
+	list next;
+	while (l != NULL){
+		next = l->next;
+		free(l);
+		l = next;
+	}
+}
+//Länge der Liste
+int length(list l) { 
+	int count = 0;
+	while (l != NULL) { 
+		count++;
+		l = l->next; 
+	} 
+	return count;
+}
+//Elemente der Liste drucken
+void print_list(list l){
+	if (l == NULL) printf ("leer");
+	else
+		while (l != NULL){
+			printf("%d ", l->value);
+			l = l->next;
+		}
+}
+
+//Element an Position pos einfügen.
+int insert_pos(int v, int pos, list *l){
+	//Einfügen an Position 0.
+	if (pos == 0){ 
+		insert (v, l);
+		return 0;
+	}
+	int count;
+	int len = length(*l);
+	if (pos > len){
+		return -1;
+	}
+	//festlegen der Pointer auf das erste und zweite Element.
+	list akt = *l;
+	list nxt = *l;
+	nxt = nxt->next;
+	//Erhöhen der Zählvariable, bis die gewünschte Position erreicht ist.
+	for (count = 1; count < pos; count++){
+		akt = akt->next;
+		nxt = nxt ->next;
+		if (akt == NULL) break;
+	}
+	//Fehlerbehandlung
+	if (count < pos) return -1;
+	//Erstellen eines neuen listenelements
+	listelement * new;
+	new = malloc(sizeof(listelement));
+	//Zuweisen des Wertes v.
+	new->value = v;
+	//Setzen der Pointer des vorherigen und nächsten Elements.
+	new->next = nxt;
+	akt->next = new;
+	return 0;
+}
+	
+
+//Alle Vorkommen von Element e löschen.
+int delete_elem(int e, list *l){
+	if (*l == NULL){
+		return -1;
+	}
+	list akt = *l;
+	list prev = akt;
+	if (akt->value == e){
+		delete_head(l);
+	}
+	akt = akt->next;
+	while (akt != NULL){
+		if (akt->value == e){
+			prev->next = akt->next;
+			free(akt);
+			akt = prev->next;
+			continue;
+		}
+		prev = akt;
+		akt = akt->next;
+	}
+	return 0;
+}
+
+
+void sort(int m, list *l){
+	list sort = NULL;
+	list akt = *l;
+	if ( m > 0){
+	while (akt != NULL){
+		list nxt = akt->next;
+		list sortakt;
+		if (sort == NULL || sort->value >= akt->value){
+			akt->next = sort;
+			sort = akt;
+		}
+		else {
+			sortakt = sort;
+			while (sortakt->next != NULL && sortakt->next->value < akt->value){
+				sortakt = sortakt->next;
+			}
+			akt->next = sortakt->next;
+			sortakt->next = akt;
+		}
+		akt = nxt;
+	}
+	*l = sort;
+	}
+	if ( m < 0){
+	while (akt != NULL){
+		list nxt = akt->next;
+		list sortakt;
+		if (sort == NULL || sort->value <= akt->value){
+			akt->next = sort;
+			sort = akt;
+		}
+		else {
+			sortakt = sort;
+			while (sortakt->next != NULL && sortakt->next->value > akt->value){
+				sortakt = sortakt->next;
+			}
+			akt->next = sortakt->next;
+			sortakt->next = akt;
+		}
+		akt = nxt;
+	}
+	*l = sort;
+	}
+}
