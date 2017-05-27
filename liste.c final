@@ -1,12 +1,12 @@
-# Praxis der Programmierung
-# Hausaufgabe 1 - einfach verkettete Listen
-# Abgabedatum: 28.05.2017
-#
-# Gruppennummer: 55
-# Gruppenmitglieder:
-# - Eike Olaf Pubantz
-# - Max Wiedenhöft
-# - Jan Heuer
+/* Praxis der Programmierung
+   Hausaufgabe 1 - einfach verkettete Listen
+   Abgabedatum: 28.05.2017
+
+   Gruppennummer: 55
+   Gruppenmitglieder:
+   - Eike Olaf Pubantz
+   - Max Wiedenhöft
+   - Jan Heuer */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -96,7 +96,7 @@ int insert_pos(int v, int pos, list *l){
 	}
 	int count;
 	int len = length(*l);
-	if (pos > len){
+	if ((pos > len) || (pos < 0)){
 		return -1;
 	}
 	//festlegen der Pointer auf das erste und zweite Element.
