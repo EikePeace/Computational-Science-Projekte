@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct le{
 	int value;
@@ -15,7 +16,7 @@ void delete_all(list l);
 int length(list l);
 void print_list(list l);
 int insert_pos(int v, int pos, list l);
-
+int delete_elem(int e, list *l);
 
 	
 int main(){
@@ -71,15 +72,58 @@ void print_list(list l){
 		}
 }
 //Element an Position pos einfügen.
-int insert_pos(int v, int pos, list l){
-	int count = 0;
-	while (count < pos){
-		count++;
-		l = l->next;
-		if (l == NULL) break;
+int insert_pos(int v, int pos, list *l){
+	//Einfügen an Position 0.
+	if (pos == 0){ 
+		insert (v, l);
+		return 0;
 	}
+	int count;
+	//festlegen der Pointer auf das erste und zweite Element.
+	list akt = *l;
+	list nxt = *l;
+	nxt = nxt->next;
+	//Erhöhen der Zählvariable, bis die gewünschte Position erreicht ist.
+	for (count = 1; count < pos; count++){
+		akt = akt->next;
+		nxt = nxt ->next;
+		if (akt == NULL) break;
+	}
+	//Fehlerbehandlung
 	if (count < pos) return -1;
-	insert (v, &l);
+	//Erstellen eines neuen listenelements
+	listelement * new;
+	new = malloc(sizeof(listelement));
+	//Zuweisen des Wertes v.
+	new->value = v;
+	//Setzen der Pointer des vorherigen und nächsten Elements.
+	new->next = nxt;
+	akt->next = new;
+	return 0;
+}
+	
+
+//Alle Vorkommen von Element e löschen.
+int delete_elem(int e, list *l){
+	if (*l == NULL){
+		return -1;
+	}
+	list akt = *l;
+	list prev = akt;
+	if (akt->value == e){
+		delete_head(l);
+	}
+	akt = akt->next;
+	while (akt != NULL){
+		if (akt->value == e){
+			prev->next = akt->next;
+			free(akt);
+			akt = prev->next;
+			continue;
+		}
+		prev = akt;
+		akt = akt->next;
+	}
 	return 0;
 }
 /*Alle Vorkommen von Element e löschen.
@@ -94,4 +138,56 @@ int delete_elem(int e, list *l){
 		l = l->next;
 	}
 	return 0;
+}*/
+
+/*insertionSort Verfahren Prototyp 1.
+
+void sort(int m, list * l){
+	listelement* insertion_sort(listelement* head){
+	    listelement *a, *b, *c;
+	    a = head;
+	    head = NULL;
+	    while(a != NULL){
+		c = a;
+		a = a->next;
+		if (head != NULL){
+		    if(c->value > head->value){
+			b = head;
+			while ((b->next != NULL) && (c->value> b->next->value)){
+			    b = b->next;
+			}
+			c->next = b->next;
+			b->next = c;
+		    }
+		    else{
+			c->next = head;
+			head = c ;
+		    }
+		}
+		else{
+		    c->next = NULL;
+		    head = c ;
+		}
+	    }
+	    return head;
+	}
+	if (m > 0){
+		print_list(l)
+	}
+	if (m < 0){					//Damit bei negativem Wert für m die Liste in absteigender Reihenfolge wiederge-
+		listelement* reverse(node* head){	//geben wird mit dieser Funktion die Liste umdrehen und dann printen.
+		    listelement* prev    = NULL;	//Weiß nicht ob man die Funktion nochmal separat deklarieren muss
+		    listelement* current = head;
+		    listelement* next;
+		    while (current != NULL){
+			next  = current->next;
+			current->next = prev;
+			prev = current;
+			current = next;
+		    }
+		    head = prev;
+		    return head;
+		}
+		print_list(l);
+	}
 }*/
