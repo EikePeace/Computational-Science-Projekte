@@ -97,31 +97,72 @@ int delete_elem(int e, list *l){
 }*/
 
 /*insertionSort Verfahren Prototyp 1.
+
 void sort(int m, list * l)
+{
+	listelement* insertion_sort(listelement* head)
 	{
-	int n, k, j, t
-	n = sizeof(l)
-	for (k = 1 ; k <= n - 1; k++) 
+	    listelement *x, *y, *e;
+	    x = head;
+	    head = NULL;
+	    while(x != NULL)
+	    {
+		e = x;
+		x = x->next;
+		if (head != NULL)
 		{
-   			j = k;
-  	   		if (m > 0)						//Für aufsteigend Sortierung
-			while ( j > 0 && l[j] < l[j-1])
+		    if(e->value > head->value)
+		    {
+			y = head;
+			while ((y->next != NULL) && (e->value> y->next->value))
 			{
-      				t          = l[j];
-      				l[j]   = l[j-1];
-      				l[j-1] = t;
- 	
-      				j--;
-   			}
-			
- 		 	if (m < 0)						//Für absteigende Sortierung
-	   		while ( j > 0 && l[j] > l[j-1])
-			{
-      				t          = l[j];
-      				l[j]   = l[j-1];
-      				l[j-1] = t;
- 	
-      				j--;
-   			 }
- 		 }
-	}*/
+			    y = y->next;
+			}
+			e->next = y->next;
+			y->next = e;
+		    }
+		    else
+		    {
+			e->next = head;
+			head = e ;
+		    }
+		}
+		else
+		{
+		    e->next = NULL;
+		    head = e ;
+		}
+	    }
+	    return head;
+	}
+	if (m > 0)
+		print_list(l)
+	if (m < 0)					//Damit bei negativem Wert für m die Liste in absteigender Reihenfolge wiederge-
+		listelement* reverse(node* head)	//geben wird mit dieser Funktion die Liste umdrehen und dann printen.
+		{					//Weiß nicht ob man die Funktion nochmal separat deklarieren muss
+		    listelement* prev    = NULL;
+		    listelement* current = head;
+		    listelement* next;
+		    while (current != NULL)
+		    {
+			next  = current->next;
+			current->next = prev;
+			prev = current;
+			current = next;
+		    }
+		    head = prev;
+		    return head;
+		}
+		print_list(l);
+}*/
+
+
+
+
+
+
+
+
+
+
+		
