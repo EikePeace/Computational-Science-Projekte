@@ -95,3 +95,36 @@ int delete_elem(int e, list *l){
 	}
 	return 0;
 }*/
+
+/*insertionSort Verfahren Prototyp 1.
+void sort(int m, list * l)
+	{
+	int n, k, j, t
+	n = sizeof(l)
+	if (m > 0)						//Für aufsteigend Sortierung
+		for (k = 1 ; k <= n - 1; k++) 
+		{
+   			j = k;
+  	   		while ( j > 0 && l[j] < l[j-1])
+			{
+      				t          = l[j];
+      				l[j]   = l[j-1];
+      				l[j-1] = t;
+ 	
+      				j--;
+   			 }
+ 		 }
+	if (m < 0)						//Für absteigende Sortierung
+		for (k = 1 ; k <= n - 1; k++) 
+		{
+   			j = k;
+  	   		while ( j > 0 && l[j] > l[j-1])
+			{
+      				t          = l[j];
+      				l[j]   = l[j-1];
+      				l[j-1] = t;
+ 	
+      				j--;
+   			 }
+ 		 }
+	}*/
