@@ -194,7 +194,7 @@ void sort(int m, list *l){
 				//Dann wird das aktuelle Element der sortierten Liste zu seinem Nachfolger.
 				sortakt = sortakt->next;
 			}
-			//Der Pointer des aktuellen Elements wirdzu einem Pointer auf dden Nachfolger des aktuellen ELements der sortierten Liste.
+			//Der Pointer des aktuellen Elements wird zu einem Pointer auf den Nachfolger des aktuellen Elements der sortierten Liste.
 			akt->next = sortakt->next;
 			//Der Nachfolger des aktuellen Elements der sortierten Liste wird zum aktuellen Element.
 			sortakt->next = akt;
