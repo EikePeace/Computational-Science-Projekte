@@ -152,11 +152,13 @@ int delete_elem(int e, list *l){
 	}
 	list akt = *l;
 	list prev = akt;
+	//Falls das zu entfernende Element bereits das erste Element der Liste ist, wird es hier entfernt.
 	if (akt->value == e){
 		delete_head(l);
 	}
 	akt = akt->next;
 	while (akt != NULL){
+		//Umzuweisung des Zeigers des vorherigen Elements, sodass es jetzt auf das nächste Element statt auf das aktuell zu entfernende zeigt.
 		if (akt->value == e){
 			prev->next = akt->next;
 			akt = prev->next;
