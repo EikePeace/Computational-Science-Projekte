@@ -1,12 +1,13 @@
-/* Praxis der Programmierung
-   Hausaufgabe 1 - einfach verkettete Listen
-   Abgabedatum: 28.05.2017
+/* 	Praxis der Programmierung
+	Hausaufgabe 1 - einfach verkettete Listen
+	Abgabedatum: 28.05.2017
 
-   Gruppennummer: 55
-   Gruppenmitglieder:
-   - Eike Olaf Pubantz
-   - Max Wiedenhöft
-   - Jan Heuer */
+	Gruppennummer: 64
+	Gruppenmitglieder:
+	- Eike Olaf Pubantz
+	- Max Wiedenhöft
+	- Jan Heuer
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,12 +36,32 @@ int main(){
 	insert(10, &l);
 	insert(5, &l);
 	insert(7, &l);
+	insert(5, &l);
+	insert(68, &l);
+	insert(-35, &l);
+	printf("Liste mit den Elementen -35, 68, 5, 7, 5 & 10: ");
 	print_list(l);
-	printf("%d\n", length(l));
-	insert_pos(4,10,&l);
-	//delete_elem(5, &l);
+	insert(37, &l);
+	printf("\nListe mit der Länge %d, nach dem einfügen der 37.: ", length(l));
+	print_list(l);
+	insert_pos(4,2,&l);
+	printf("\nNachdem die 4 an der 2. Position eingefügt wurde: ");
+	print_list(l);
+	delete_elem(5, &l);
+	printf("\nNachdem alle Vorkommen der 5 gelöscht wurden: ");
+	print_list(l);
+	delete_head(&l);
+	printf("\nNachdem das erste Element gelöscht wurde: ");
+	print_list(l);
 	sort(-1, &l);
+	printf("\nNach Sortierung in absteigender Richtung: ");
 	print_list(l);
+	sort(1, &l);
+	printf("\nNach Sortierung in aufsteigender Richtung: ");
+	print_list(l);
+	delete_all(l);
+	printf("\nListe gelöscht.\n");
+	printf("\n");
 	return 0;
 }
 //Wert am Anfang einfügen
@@ -96,7 +117,7 @@ int insert_pos(int v, int pos, list *l){
 	}
 	int count;
 	int len = length(*l);
-	if ((pos > len) || (pos < 0)){
+	if (pos > len){
 		return -1;
 	}
 	//festlegen der Pointer auf das erste und zweite Element.
@@ -137,7 +158,6 @@ int delete_elem(int e, list *l){
 	while (akt != NULL){
 		if (akt->value == e){
 			prev->next = akt->next;
-			free(akt);
 			akt = prev->next;
 			continue;
 		}
@@ -185,6 +205,7 @@ void sort(int m, list *l){
 	//Der Pointer auf das erste element der Liste wird auf die sortierte Liste umgelegt.
 	*l = sort;
 	}
+	//Das gesamte Prozedere umgekehrt. Also die selben Dinge werden durchgeführt nur unter anderen Bedingungen (kleiner statt größer).
 	if ( m < 0){
 	while (akt != NULL){
 		list nxt = akt->next;
