@@ -145,17 +145,20 @@ int insert_pos(int v, int pos, list *l){
 	
 
 //Alle Vorkommen von Element e löschen.
-int delete_elem(int e, list *l){
+int delete_elem(int e, list *l){	
+	//Fehlerbehandlung
 	if (*l == NULL){
 		return -1;
 	}
 	list akt = *l;
 	list prev = akt;
+	//Falls das zu entfernende Element bereits das erste Element der Liste ist, wird es hier entfernt.
 	if (akt->value == e){
 		delete_head(l);
 	}
 	akt = akt->next;
 	while (akt != NULL){
+		//Umzuweisung des Zeigers des vorherigen Elements, sodass er jetzt auf das nächste Element statt auf das aktuell zu entfernende zeigt.
 		if (akt->value == e){
 			prev->next = akt->next;
 			akt = prev->next;
@@ -194,7 +197,7 @@ void sort(int m, list *l){
 				//Dann wird das aktuelle Element der sortierten Liste zu seinem Nachfolger.
 				sortakt = sortakt->next;
 			}
-			//Der Pointer des aktuellen Elements wirdzu einem Pointer auf dden Nachfolger des aktuellen ELements der sortierten Liste.
+			//Der Pointer des aktuellen Elements wird zu einem Pointer auf den Nachfolger des aktuellen Elements der sortierten Liste.
 			akt->next = sortakt->next;
 			//Der Nachfolger des aktuellen Elements der sortierten Liste wird zum aktuellen Element.
 			sortakt->next = akt;
