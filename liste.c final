@@ -145,7 +145,8 @@ int insert_pos(int v, int pos, list *l){
 	
 
 //Alle Vorkommen von Element e löschen.
-int delete_elem(int e, list *l){
+int delete_elem(int e, list *l){	
+	//Fehlerbehandlung
 	if (*l == NULL){
 		return -1;
 	}
