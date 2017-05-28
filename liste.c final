@@ -158,7 +158,7 @@ int delete_elem(int e, list *l){
 	}
 	akt = akt->next;
 	while (akt != NULL){
-		//Umzuweisung des Zeigers des vorherigen Elements, sodass es jetzt auf das nächste Element statt auf das aktuell zu entfernende zeigt.
+		//Umzuweisung des Zeigers des vorherigen Elements, sodass er jetzt auf das nächste Element statt auf das aktuell zu entfernende zeigt.
 		if (akt->value == e){
 			prev->next = akt->next;
 			akt = prev->next;
