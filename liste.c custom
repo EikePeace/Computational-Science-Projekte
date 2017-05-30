@@ -1,0 +1,336 @@
+/* 	Praxis der Programmierung
+	Hausaufgabe 1 - einfach verkettete Listen
+	Abgabedatum: 28.05.2017
+
+	Gruppennummer: 64
+	Gruppenmitglieder:
+	- Eike Olaf Pubantz
+	- Max Wiedenhöft
+	- Jan Heuer
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct le{
+	int value;
+	struct le * next;
+};
+typedef struct le listelement;
+
+typedef listelement * list;
+
+void insert(int v, list *l);
+int delete_head(list *l);
+void delete_all(list l);
+int length(list l);
+void print_list(list l);
+int insert_pos(int v, int pos, list *l);
+int delete_elem(int e, list *l);
+void sort(int m, list *l);
+
+//Main Eike
+int main(){
+	int v, pos, run;
+	char c, e, name;
+	list l = NULL;
+	FILE *datei;
+	run = 1;
+	while (run == 1){
+		printf("Was möchten Sie tun?");
+		printf("\n(N)eues Element hinzufügen, (L)iste inklusive Länge anzeigen, (E)lement der Liste löschen, Liste (S)ortieren oder (B)eenden: ");
+		scanf("%s", &e);
+		printf("\n");
+		if (e == 'N' || e == 'n'){
+			printf("Möchten Sie das Element am (A)nfang einfügen oder an einer bestimmten (P)osition: ");
+			scanf("%s", &c);
+			if (c == 'A' || c == 'a'){
+				printf("\nGeben Sie nun bitte Ihr Element ein: ");
+				scanf("%d", &v);
+				insert(v, &l);
+			}
+			if (c == 'P' || c == 'p'){
+				printf("Geben Sie nun bitte Ihren Wert ein: ");
+				scanf("%d", &v);
+				printf("Geben Sie nun bitte die Position des Wertes ein (Der Anfang der Liste liegt bei Position 0.): ");
+				scanf("%d", &pos);
+				insert_pos(v, pos, &l);
+			}
+			printf("\nIhr Element wurde der Liste hinzugefügt.");
+		}
+		if (e == 'L' || e == 'l'){
+			print_list(l);
+			printf(" Ihre Liste besitzt eine Länge von %d.", length(l));
+		}
+		if (e == 'E' || e == 'e'){
+			printf("Möchten Sie das (E)rste, (A)lle, oder alle (V)orkommen eines bestimmten Elements löschen: ");
+			scanf("%s", &c);
+			if (c == 'E' || c == 'e'){
+				delete_head(&l);
+			}
+			if (c == 'A' || c == 'a'){
+				delete_all(l);
+			}
+			if (c == 'V' || c == 'v'){
+				printf("Bitte geben Sie den Wert der zu löschenden Elemente ein: ");
+				scanf("%d", &v);
+				delete_elem(v, &l);
+			}
+			printf("\nDer Löschvorgang wurde nach Ihren Wünschen durchgeführt.");
+		}
+		if (e == 'S' || e == 's'){
+			printf("Möchten Sie A(u)fsteigend oder A(b)steigend sortieren lassen: ");
+			scanf("%s", &c);
+			if (c == 'U' || c == 'u'){
+				sort(1, &l);
+			}
+			if (c == 'B' || c == 'b'){
+				sort(-1, &l);
+			}
+			printf("\nDie Liste wurde erfolgreich sortiert.");
+		}
+		if (e == 'B' || e == 'b'){
+			run = 0;
+		}
+		printf("\n\n\n");
+	}
+	printf("Möchten sie Ihre Liste speichern? (Y/N): ");
+	scanf("%s", &e);
+	if(e == 'Y' || e == 'y'){
+		datei = fopen("Liste.txt", "w+");
+		if (l == NULL){
+			fprintf (datei, "leer");
+		}
+		else{
+			while (l != NULL){
+				fprintf(datei, "%d ", l->value);
+				l = l->next;
+			}
+		}				
+	}
+	printf("Vielen Dank für die Benutzung dieses Programms.");
+	return 0;
+}
+	
+/* Main Bordhin
+
+int main(){
+	//Erzeugen einer Liste.
+	list l = NULL;
+	//Ausgabe des Inhalts der leeren Liste.
+	printf("Die aktuelle Liste ist ");
+	print_list(l);
+	printf(".\n");
+	//Einfügen von Werten.
+	insert(10, &l);
+	insert(5, &l);
+	insert(7, &l);
+	insert(5, &l);
+	insert(68, &l);
+	insert(-35, &l);
+	//Ausgabe der Liste.
+	printf("Liste mit den Elementen -35, 68, 5, 7, 5 & 10: ");
+	print_list(l);
+	//Eingabe der 37 und Ausgabe der Liste.
+	insert(37, &l);
+	printf("\nListe mit der Länge %d, nach dem einfügen der 37.: ", length(l));
+	print_list(l);
+	//Einfügen der 4 an der 2. Position und Ausgabe der Liste.
+	insert_pos(4,2,&l);
+	printf("\nNachdem die 4 an der 2. Position eingefügt wurde: ");
+	print_list(l);
+	//Löschen aller Fünfen und Ausgabe der Liste
+	delete_elem(5, &l);
+	printf("\nNachdem alle Vorkommen der 5 gelöscht wurden: ");
+	print_list(l);
+	//Löschen des ersten Elements und Ausgabe der Liste.
+	delete_head(&l);
+	printf("\nNachdem das erste Element gelöscht wurde: ");
+	print_list(l);
+	//Sortieren in absteigender Reihenfolge und Ausgabe der Liste.
+	sort(-1, &l);
+	printf("\nNach Sortierung in absteigender Richtung: ");
+	print_list(l);
+	//Sortieren in aufsteigender Reihenfolge und Ausgabe der Liste.
+	sort(1, &l);
+	printf("\nNach Sortierung in aufsteigender Richtung: ");
+	print_list(l);
+	//Löschen aller Elemente und Ausgabe einer Information.
+	delete_all(l);
+	printf("\nListe gelöscht.\n");
+	printf("\n");
+	//Sollte versucht werden die Liste auszugeben, so kommt es zu einem Fehler und das Programm beendet sich.
+	return 0;
+} */
+
+//Wert am Anfang einfügen
+void insert(int v, list *l){
+	listelement * new;
+	new = malloc(sizeof(listelement));
+	new->value = v;
+	new->next = *l;
+	*l = new;
+}
+
+//Ersten Wert löschen
+int delete_head(list *l){
+	if (*l == NULL) return -1;
+	list old = *l;
+	*l = old->next;
+	free(old);
+	return 0;
+}
+
+//Ganze Liste löschen
+void delete_all(list l){
+	list next;
+	while (l != NULL){
+		next = l->next;
+		free(l);
+		l = next;
+	}
+}
+
+//Länge der Liste
+int length(list l) { 
+	int count = 0;
+	while (l != NULL) { 
+		count++;
+		l = l->next; 
+	} 
+	return count;
+}
+
+//Elemente der Liste drucken
+void print_list(list l){
+	if (l == NULL)
+		printf ("leer");
+	else
+		while (l != NULL){
+			printf("%d ", l->value);
+			l = l->next;
+			}		
+}
+
+//Element an Position pos einfügen.
+int insert_pos(int v, int pos, list *l){
+	//Einfügen an Position 0.
+	if (pos == 0){ 
+		insert (v, l);
+		return 0;
+	}
+	int count;
+	int len = length(*l);
+	if (pos > len){
+		return -1;
+	}
+	//festlegen der Pointer auf das erste und zweite Element.
+	list akt = *l;
+	list nxt = *l;
+	nxt = nxt->next;
+	//Erhöhen der Zählvariable, bis die gewünschte Position erreicht ist.
+	for (count = 1; count < pos; count++){
+		akt = akt->next;
+		nxt = nxt ->next;
+		if (akt == NULL) break;
+	}
+	//Fehlerbehandlung
+	if (count < pos) return -1;
+	//Erstellen eines neuen listenelements
+	listelement * new;
+	new = malloc(sizeof(listelement));
+	//Zuweisen des Wertes v.
+	new->value = v;
+	//Setzen der Pointer des vorherigen und nächsten Elements.
+	new->next = nxt;
+	akt->next = new;
+	return 0;
+}
+	
+
+//Alle Vorkommen von Element e löschen.
+int delete_elem(int e, list *l){	
+	//Fehlerbehandlung
+	if (*l == NULL){
+		return -1;
+	}
+	list akt = *l;
+	list prev = akt;
+	//Falls das zu entfernende Element bereits das erste Element der Liste ist, wird es hier entfernt.
+	if (akt->value == e){
+		delete_head(l);
+	}
+	akt = akt->next;
+	while (akt != NULL){
+		//Umzuweisung des Zeigers des vorherigen Elements, sodass er jetzt auf das nächste Element statt auf das aktuell zu entfernende zeigt.
+		if (akt->value == e){
+			prev->next = akt->next;
+			akt = prev->next;
+			continue;
+		}
+		prev = akt;
+		akt = akt->next;
+	}
+	return 0;
+}
+
+
+void sort(int m, list *l){
+	//Erzeugt leere sortierte Liste.
+	list sort = NULL;
+	//Erzeugt aktuelles und nächstes Element.
+	list akt = *l;
+	list nxt = *l;
+	if ( m >= 0){
+	while (akt != NULL){
+		//Erzeugt nächstes Element und erstes sortiertes.
+		list nxt = akt->next;
+		list sortakt;
+		//Falls das erste Element der sortierten Liste NULL ist oder größer gleich dem Wert des aktuellen Elements
+		if (sort == NULL || sort->value >= akt->value){
+			//Das nächste Element erhält die Eigenschaften des aktuellen ersten Elements der sortierten Liste.
+			akt->next = sort;
+			//Das erste Element der sortierten Liste wird zum aktuellen Element.
+			sort = akt;
+		}
+		else {
+			//Das aktuelle Element der sortierten Liste wird zum ersten Element der sortierten Liste.
+			sortakt = sort;
+			//Wenn es einen Nachfolger hat und dessen Wert kleiner ist als der Wert des aktuellen Elements:
+			while (sortakt->next != NULL && sortakt->next->value < akt->value){
+				//Dann wird das aktuelle Element der sortierten Liste zu seinem Nachfolger.
+				sortakt = sortakt->next;
+			}
+			//Der Pointer des aktuellen Elements wird zu einem Pointer auf den Nachfolger des aktuellen Elements der sortierten Liste.
+			akt->next = sortakt->next;
+			//Der Nachfolger des aktuellen Elements der sortierten Liste wird zum aktuellen Element.
+			sortakt->next = akt;
+		}
+		//Das aktuelle Element wird zum nächsten Element.
+		akt = nxt;
+	}
+	//Der Pointer auf das erste element der Liste wird auf die sortierte Liste umgelegt.
+	*l = sort;
+	}
+	//Das gesamte Prozedere umgekehrt. Also die selben Dinge werden durchgeführt nur unter anderen Bedingungen (kleiner statt größer).
+	if ( m < 0){
+	while (akt != NULL){
+		list nxt = akt->next;
+		list sortakt;
+		if (sort == NULL || sort->value <= akt->value){
+			akt->next = sort;
+			sort = akt;
+		}
+		else {
+			sortakt = sort;
+			while (sortakt->next != NULL && sortakt->next->value > akt->value){
+				sortakt = sortakt->next;
+			}
+			akt->next = sortakt->next;
+			sortakt->next = akt;
+		}
+		akt = nxt;
+	}
+	*l = sort;
+	}
+}
