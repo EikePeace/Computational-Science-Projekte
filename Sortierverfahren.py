@@ -1,4 +1,4 @@
-﻿# Algorithmen und Datenstrukturen
+# Algorithmen und Datenstrukturen
 # Hausaufgabe 2 - Sortierverfahren
 # Abgabedatum: 11.6.2017
 #
@@ -37,22 +37,66 @@ def merge(a, b):
     return result
 
 def sortHeapDesc(a):
-    print('Parameter a:')
-    print(a)
-    # hier soll Ihre Implementierung von absteigendem HeapSort stehen.
-    result = a  # durch das Ergebnis Ihrer Implementierung ersetzen
-    return result
+    print('Parameter a: ', a)
+
+    l = len(a)-1 #letztes Element des Baums
+    p = (l-1)//2 #letzter Vaterknoten im Baum
+
+    print("Heapeigenschaft herstellen")
+    while p >= 0: #Schleife über alle Vaterknoten
+        a = heapify(a, p, l)
+        print(a)
+        p -= 1
+    print("Heap fertig")
+    print()
+
+    while l > 0:
+        a = swap(a, 0, l)
+        print("Sortierschirtt: ", a)
+        l -= 1 #Leztztes Element gehört nicht mehr zum Baum
+        a = heapify(a, 0, l) #Heapeigenschaft wieder herstellen
+        print("Neuer Heap: ", a)
+
+    return a
+
+def heapify(a, p, l): #p: Knoten für den Heapeigenschaft hergestellt wird, l: Ende des Baums
+    if 2*p+1 > l: #p hat kein Kind, daher nichts zu machen
+        return a
+    if 2*p+1 == l: #p hat nur ein Kind
+        if a[p] < a[2*p+1]:
+            return a
+        else:
+            a = swap(a, p, 2*p+1)
+            return a
+    if a[2*p+1] < a[2*p+2]: #Bestimmen des kleineren Kindes von p
+        if a[2*p+1] < a[p]: #Wenn Kind kleiner als Vater
+            a = swap(a, p, 2*p+1) #Tauschen
+            a = heapify(a, 2*p+1, l) #Heapeigenschaft für verändertes Kind wiederherstellen
+    elif a[2*p+2] < a[p]:
+            a = swap(a, p, 2*p+2)
+            a = heapify(a, 2*p+2, l)
+    return a
+
+def swap(l, m, n): #Tauscht l[m] und l[n]
+    h = l[m]
+    l[m] = l[n]
+    l[n] = h
+    return l
 
 # Hier ist ein Testfall:
 liste = [3, 2, 1, 9, 17, 4, -1, 0]
-print(liste)
-mergeResult = sortMerge(liste)
-#heapResult = sortHeapDesc(liste)
 
+print("Mergesort:")
+mergeResult = sortMerge(liste)
 print()
-print('Endergebnis:')
-print(mergeResult)
-#print(heapResult)
+print('Endergebnis: ', mergeResult)
+print()
+
+print("Heapsort:")
+heapResult = sortHeapDesc(liste)
+print()
+print('Endergebnis: ', heapResult)
+print()
 
 # Das Ergebnis sollte folgende Liste sein:
 # [-1, 0, 1, 2, 3, 4, 9, 17]
