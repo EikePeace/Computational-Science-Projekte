@@ -20,34 +20,43 @@ def dynCompNChooseK(n, k):
     print('Parameter k:')
     print(k)
     ## hier soll Ihre Implementierung stehen.
-    table = dynCompNChooseKTable(n, k)
-    result = table[n][k]
+    table = dynCompNChooseKTable(n, k) # Tabelle für binom(n, k)
+    result = table[n][k] # Auslesen des Ergebnisses aus der Tabelle
     return result
 
 def dynCompNChooseKTable(n, k):
-    #print('Parameter n:')
-    #print(n)
-    #print('Parameter k:')
-    #print(k)
+    print('Parameter n:')
+    print(n)
+    print('Parameter k:')
+    print(k)
     ## hier soll Ihre Implementierung stehen.
+
+    # Erstellen der Tabelle mit n+1 Zeilen (von 0 bis n), k+1 Spalten
+    # Komplett mit Nullen gefüllt
     result = []
-    for i in range(0,n+1):
+    for i in range(0,n+1): # Für jede Zeile leere Liste anfügen
         result.append([])
-        for j in range(0,k+1):
+        for j in range(0,k+1): # Für jede Spalte eine 0 anfügen
             result[i].append(0)
-    for i in range(0,n+1):
-        result[i][0] = 1
-    for i in range(1,n+1):
-        for j in range(1,k+1):
-            result[i][j] = result[i-1][j] + result[i-1][j-1]
+
+    # Basisfälle:
+    # Fall binom(0, k) = 0 bereits abgearbeitet (gesamte Tabelle mit 0 initialisiert)
+    for i in range(0,n+1): # Schleife über alle n-Werte
+        result[i][0] = 1 # binom(n, 0) = 1
+
+    # Berechnen der restlichen Tabelle
+    for i in range(1,n+1): # Schleife über alle n-Werte (außer n=0 da Basisfall)
+        for j in range(1,k+1): # Schleife über alle k-Werte (außer k=0 da Basisfall)
+            result[i][j] = result[i-1][j] + result[i-1][j-1] # binom(n, k) = binom(n-1, k) + binom(n-1, k-1)
+
     return result
 
 ## Hier ist ein Testfall:
 n = 5
 k = 3
 
-n = int(input("n = "))
-k = int(input("k = "))
+#n = int(input("n = "))
+#k = int(input("k = "))
 
 result = dynCompNChooseK(n, k)
 resultTable = dynCompNChooseKTable(n, k)
