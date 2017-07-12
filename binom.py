@@ -30,13 +30,14 @@ def dynCompNChooseK(n, k):
     return result
 
 def dynCompNChooseKTable(n, k):
-    print("Tabelle für binom(%d, %d):" %(n, k))
     #print('Parameter n:')
     #print(n)
     #print('Parameter k:')
     #print(k)
     ## hier soll Ihre Implementierung stehen.
 
+    print("Tabelle für binom(%d, %d):" %(n, k))
+    
     # Erstellen der Tabelle mit n+1 Zeilen (von 0 bis n)
     result = []
     for i in range(0,n+1): # Für jede Zeile leere Liste anfügen
