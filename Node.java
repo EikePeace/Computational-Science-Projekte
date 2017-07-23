@@ -62,7 +62,13 @@ public class Node<T>{
   }
 
   boolean isConnected(Node<T> node){
-    return true;
+    for (int i = 0; i < this.adj.size(); i++){
+		if (this.adj.get(i) == node){
+		  return true;
+		}
+		else {
+		return false;
+		}
+	}
   }
-
 }
